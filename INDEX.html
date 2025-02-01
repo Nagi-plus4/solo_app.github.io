@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>nagi plus</title>
+    <title>Nagi Plus</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
@@ -340,10 +340,10 @@
 <body>
     <header>
         <div id="search-container">
-            
-            <a href="https://nagi-plus4.github.io/solo_app.github.io/BUSCADOR.html" class="view-all" onclick="showAlert(event, 'Películas de Terror')">BUSCAR PELICULAS DE ANIMES, DRAMA, AQUI</a>
-          
-            
+            <input type="text" id="search" placeholder="Buscar películas, series, géneros..." oninput="handleInput(event)" onkeydown="checkEnter(event)">
+            <i id="search-icon" class="fas fa-clock" onclick="toggleHistoryModal()"></i>
+            <div id="search-results">
+                <ul id="results-list"></ul>
             </div>
         </div>
     </header>
@@ -492,7 +492,7 @@
                 <p>One Piece</p>
             </div>
         </div>
-        <a href="https://nagi-plus4.github.io/solo_app.github.io/BUSCADOR.html" class="view-all" onclick="showAlert(event, 'Animes')">Ver Todo</a>
+        <a href="#" class="view-all" onclick="showAlert(event, 'Animes')">Ver Todo</a>
     </section>
 
     <footer>
@@ -650,7 +650,7 @@
             alertBox.style.display = 'block';
             setTimeout(() => {
                 alertBox.style.display = 'none';
-                
+                window.location.href = "https://www.example.com";
             }, 3000);
         }
 

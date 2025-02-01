@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Películas</title>
+    <title>BUSCADOR NAGI PLUS</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
@@ -46,7 +46,7 @@
         }
 
         .movie {
-            position: relative; /* Needed for absolute positioning of rating */
+            position: relative;
         }
 
         .movie img {
@@ -107,6 +107,7 @@
         }
 
         #loadMoreButton {
+            display: none; /* Hide the button since there are only 3 movies */
             background-color: #32a8a8;
             color: white;
             padding: 10px 20px;
@@ -128,7 +129,7 @@
 
     <button id="loadMoreButton">Ver Más Películas</button>
 
-    <div class="coming-soon">pida su pelicula favorita si no encontro</div>
+    <div class="coming-soon">Pronto Más Películas</div>
 
     <footer>
         <p>Síguenos en nuestras redes sociales:</p>
@@ -143,16 +144,13 @@
 
     <script>
         const moviesData = [
-            { title: "Oppenheimer", url: "https://www.example.com/oppenheimer", poster: "https://media.themoviedb.org/t/p/w300_and_h450_bestv2/3aDWCRXLYOCuxjrjiPfLd79tcI6.jpg", rating: 8.5 },
-            { title: "Película 2", url: "#", poster: "https://media.themoviedb.org/t/p/w300_and_h450_bestv2/3aDWCRXLYOCuxjrjiPfLd79tcI6.jpg", rating: 7.2 },
-            { title: "Película 3", url: "#", poster: "https://media.themoviedb.org/t/p/w300_and_h450_bestv2/3aDWCRXLYOCuxjrjiPfLd79tcI6.jpg", rating: 9.1 },
-            // Add more movie objects here... (at least 40 for load more)
-            {title: "Película 40", url: "https://media.themoviedb.org/t/p/w300_and_h450_bestv2/3aDWCRXLYOCuxjrjiPfLd79tcI6.jpg", poster: "https://media.themoviedb.org/t/p/w300_and_h450_bestv2/3aDWCRXLYOCuxjrjiPfLd79tcI6.jpg", rating: 6.8}
+            { title: "Oppenheimer", url: "https://www.example.com/oppenheimer", poster: "https://upload.wikimedia.org/wikipedia/en/thumb/4/41/Oppenheimer_poster.jpg/220px-Oppenheimer_poster.jpg", rating: 8.5 },
+            { title: "Spider-Man: Across the Spider-Verse", url: "#", poster: "https://m.media-amazon.com/images/M/MV5BYmU5N2E3NTYtNGYzNC00N2I0LTg5ZjEtYzIzNDM3MzljMjI1XkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_FMjpg_UX1000_.jpg", rating: 8.8 },
+            { title: "Elemental", url: "#", poster: "https://lumiere-a.akamaihd.net/v1/images/p_elemental_1sht_2600x3900_ver1_a0573a93.jpeg?region=0,0,1280,1920", rating: 7.5 },
         ];
 
         const moviesGrid = document.getElementById('latest-releases');
         const loadMoreButton = document.getElementById('loadMoreButton');
-        let displayedMovies = 20;
 
         function createMovieElement(movie) {
             const movieDiv = document.createElement('div');
@@ -174,22 +172,18 @@
             }
         }
 
-        displayMovies(displayedMovies);
+        displayMovies(moviesData.length);
 
-        loadMoreButton.addEventListener('click', () => {
-            displayedMovies = Math.min(displayedMovies + 20, moviesData.length);
-            displayMovies(displayedMovies);
-            if (displayedMovies >= moviesData.length) {
-                loadMoreButton.style.display = 'none';
-            }
-        });
 
         function myFunction() {
-            const searchTerm = document.getElementById("mySearch").value.toUpperCase();
+            const searchTerm = document.getElementById("mySearch").value.toLowerCase();
             const movies = document.querySelectorAll('.movie');
             movies.forEach(movie => {
-                const title = movie.querySelector('p').textContent.toUpperCase();
-                if (title.includes(searchTerm)) {
+                const title = movie.querySelector('p').textContent.toLowerCase();
+                const sanitizedTitle = title.replace(/[\W_]/g, '');
+                const sanitizedSearchTerm = searchTerm.replace(/[\W_]/g, '');
+
+                if (sanitizedTitle.includes(sanitizedSearchTerm)) {
                     movie.style.display = '';
                 } else {
                     movie.style.display = 'none';

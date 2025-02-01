@@ -1,1 +1,201 @@
-holaaaaaaaaa
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Películas</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #181818;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background: linear-gradient(to bottom, #32a8a8, #181818);
+            padding: 10px 20px;
+            text-align: center;
+        }
+
+        #mySearch {
+            width: 400px;
+            padding: 10px;
+            border: 2px solid #32a8a8;
+            border-radius: 5px;
+            background-color: #222;
+            color: #fff;
+            margin: 10px auto;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        #mySearch::placeholder {
+            color: #aaa;
+        }
+
+        .movies-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* Three columns */
+            gap: 15px;
+            padding: 20px;
+        }
+
+        .movie {
+            position: relative; /* Needed for absolute positioning of rating */
+        }
+
+        .movie img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 10px;
+            transition: transform 0.2s ease;
+        }
+
+        .movie img:hover {
+            transform: scale(1.05);
+        }
+
+        .movie p {
+            margin-top: 5px;
+        }
+
+        .rating {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        .coming-soon {
+            text-align: center;
+            margin: 20px;
+            font-size: 18px;
+            color: #aaa;
+        }
+
+        footer {
+            background-color: #222;
+            padding: 20px;
+            text-align: center;
+            margin-top: auto;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .social-icons a {
+            color: #fff;
+            font-size: 24px;
+            transition: color 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: #32a8a8;
+        }
+
+        #loadMoreButton {
+            background-color: #32a8a8;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 20px auto;
+            display: block;
+            width: fit-content;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <input type="text" id="mySearch" onkeyup="myFunction()" placeholder="Buscar películas..." autofocus>
+    </header>
+
+    <div class="movies-grid" id="latest-releases"></div>
+
+    <button id="loadMoreButton">Ver Más Películas</button>
+
+    <div class="coming-soon">pida su pelicula favorita si no encontro</div>
+
+    <footer>
+        <p>Síguenos en nuestras redes sociales:</p>
+        <div class="social-icons">
+            <a href="https://www.tiktok.com/@sevas.by?_t=8oxIdUQqiDm&_r=1" target="_blank"><i class="fab fa-tiktok"></i></a>
+            <a href="https://youtube.com/@sevas_gaming?si=lQCNHJvTX8JX_SOM" target="_blank"><i class="fab fa-youtube"></i></a>
+            <a href="https://t.me/+V9KvEEAEXxFhOGZh" target="_blank"><i class="fab fa-telegram-plane"></i></a>
+            <a href="https://www.facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+        </div>
+    </footer>
+
+    <script>
+        const moviesData = [
+            { title: "Oppenheimer", url: "https://www.example.com/oppenheimer", poster: "https://media.themoviedb.org/t/p/w300_and_h450_bestv2/3aDWCRXLYOCuxjrjiPfLd79tcI6.jpg", rating: 8.5 },
+            { title: "Película 2", url: "#", poster: "https://media.themoviedb.org/t/p/w300_and_h450_bestv2/3aDWCRXLYOCuxjrjiPfLd79tcI6.jpg", rating: 7.2 },
+            { title: "Película 3", url: "#", poster: "https://media.themoviedb.org/t/p/w300_and_h450_bestv2/3aDWCRXLYOCuxjrjiPfLd79tcI6.jpg", rating: 9.1 },
+            // Add more movie objects here... (at least 40 for load more)
+            {title: "Película 40", url: "https://media.themoviedb.org/t/p/w300_and_h450_bestv2/3aDWCRXLYOCuxjrjiPfLd79tcI6.jpg", poster: "https://media.themoviedb.org/t/p/w300_and_h450_bestv2/3aDWCRXLYOCuxjrjiPfLd79tcI6.jpg", rating: 6.8}
+        ];
+
+        const moviesGrid = document.getElementById('latest-releases');
+        const loadMoreButton = document.getElementById('loadMoreButton');
+        let displayedMovies = 20;
+
+        function createMovieElement(movie) {
+            const movieDiv = document.createElement('div');
+            movieDiv.classList.add('movie');
+            movieDiv.innerHTML = `
+                <a href="${movie.url}" target="_blank">
+                    <img src="${movie.poster}" alt="${movie.title}">
+                    <span class="rating">${movie.rating}/10</span>
+                </a>
+                <p>${movie.title}</p>
+            `;
+            return movieDiv;
+        }
+
+        function displayMovies(numMovies) {
+            moviesGrid.innerHTML = '';
+            for (let i = 0; i < numMovies; i++) {
+                moviesGrid.appendChild(createMovieElement(moviesData[i]));
+            }
+        }
+
+        displayMovies(displayedMovies);
+
+        loadMoreButton.addEventListener('click', () => {
+            displayedMovies = Math.min(displayedMovies + 20, moviesData.length);
+            displayMovies(displayedMovies);
+            if (displayedMovies >= moviesData.length) {
+                loadMoreButton.style.display = 'none';
+            }
+        });
+
+        function myFunction() {
+            const searchTerm = document.getElementById("mySearch").value.toUpperCase();
+            const movies = document.querySelectorAll('.movie');
+            movies.forEach(movie => {
+                const title = movie.querySelector('p').textContent.toUpperCase();
+                if (title.includes(searchTerm)) {
+                    movie.style.display = '';
+                } else {
+                    movie.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>

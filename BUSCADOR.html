@@ -144,9 +144,9 @@
 
     <script>
         const moviesData = [
-            { title: "Oppenheimer", url: "https://www.example.com/oppenheimer", poster: "https://upload.wikimedia.org/wikipedia/en/thumb/4/41/Oppenheimer_poster.jpg/220px-Oppenheimer_poster.jpg", rating: 8.5 },
-            { title: "Spider-Man: Across the Spider-Verse", url: "#", poster: "https://m.media-amazon.com/images/M/MV5BYmU5N2E3NTYtNGYzNC00N2I0LTg5ZjEtYzIzNDM3MzljMjI1XkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_FMjpg_UX1000_.jpg", rating: 8.8 },
-            { title: "Elemental", url: "#", poster: "https://lumiere-a.akamaihd.net/v1/images/p_elemental_1sht_2600x3900_ver1_a0573a93.jpeg?region=0,0,1280,1920", rating: 7.5 },
+            { title: "Oppenheimer", url: "https://www.example.com/oppenheimer", poster: "https://media.themoviedb.org/t/p/w300_and_h450_bestv2/tqiHuhjw1WSj9Qr0InJ21AgMrKu.jpg", rating: 8.5 },
+            { title: "Spider-Man: Across the Spider-Verse", url: "#", poster: "https://media.themoviedb.org/t/p/w300_and_h450_bestv2/3aDWCRXLYOCuxjrjiPfLd79tcI6.jpg", rating: 8.8 },
+            { title: "Elemental", url: "#", poster: "https://lumiere-a.akamaihd.net/v1/images/encanto_ka_las_pay1_92ad7410.jpeg?region=0%2C0%2C1080%2C1350", rating: 7.5 },
         ];
 
         const moviesGrid = document.getElementById('latest-releases');
@@ -158,7 +158,7 @@
             movieDiv.innerHTML = `
                 <a href="${movie.url}" target="_blank">
                     <img src="${movie.poster}" alt="${movie.title}">
-                    <span class="rating">${movie.rating}/10</span>
+                    <span class="rating">${movie.rating}</span>
                 </a>
                 <p>${movie.title}</p>
             `;

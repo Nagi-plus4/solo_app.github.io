@@ -339,14 +339,17 @@
 </head>
 <body>
     <header>
-        <div id="search-container">
-            <input type="text" id="search" placeholder="Buscar películas, series, géneros..." oninput="handleInput(event)" onkeydown="checkEnter(event)">
-            <i id="search-icon" class="fas fa-clock" onclick="toggleHistoryModal()"></i>
-            <div id="search-results">
-                <ul id="results-list"></ul>
-            </div>
+    <div id="search-container">
+        <a href="https://nagi-plus4.github.io/solo_app.github.io/BUSCADOR.html" id="search-lupa">
+            <i class="fas fa-search"></i>
+        </a>
+        <input type="text" id="search" placeholder="Buscar películas, series, géneros..." oninput="handleInput(event)" onkeydown="checkEnter(event)">
+        <i id="search-icon" class="fas fa-clock" onclick="toggleHistoryModal()"></i>
+        <div id="search-results">
+            <ul id="results-list"></ul>
         </div>
-    </header>
+    </div>
+</header>
 
     <div class="carousel-title">POPULARES</div>
     

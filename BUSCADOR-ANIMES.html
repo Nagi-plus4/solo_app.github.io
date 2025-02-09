@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Películas y Series</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            background-color: #111;
+            color: white;
+        }
+
+        .search-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px;
+            position: relative;
+        }
+
+        .search-input {
+            padding: 12px 20px;
+            font-size: 1em;
+            border: 2px solid #FFB0C4; /* Rosa pastel */
+            border-radius: 25px 0 0 25px;
+            width: 300px;
+            outline: none;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .search-input:focus {
+            border-color: #FF69B4; /* Rosa más intenso */
+            box-shadow: 0 0 5px rgba(255, 105, 180, 0.5);
+        }
+
+        .search-button {
+            padding: 12px 20px;
+            font-size: 1em;
+            background-color: #FFB0C4; /* Rosa pastel */
+            color: white;
+            border: none;
+            border-radius: 0 25px 25px 0;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .search-button:hover {
+            background-color: #FF69B4; /* Rosa más intenso */
+            transform: translateY(-2px);
+        }
+
+        .series-container {
+            margin: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .series-item {
+            position: relative;
+            width: 150px;
+        }
+
+        .series-item a {
+            text-decoration: none; /* Quitar subrayado */
+            color: white; /* Color del texto */
+            transition: transform 0.3s; /* Transición suave */
+            display: block; /* Hacer que el enlace ocupe todo el espacio */
+            height: 100%; /* Asegurarse de que el enlace ocupe toda la altura */
+        }
+
+        .series-item a:hover {
+            transform: scale(1.05); /* Efecto de aumento al pasar el mouse */
+        }
+
+        .series-item img {
+            width: 100%;
+            height: 220px;
+            border-radius: 5px;
+            object-fit: cover;
+        }
+
+        .calificacion {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(255, 176, 204, 0.7); /* Rosa pastel */
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        .series-title {
+            margin-top: 5px;
+            color: white;
+            font-size: 1em;
+            text-align: center;
+            overflow: hidden; /* Ocultar texto que no cabe */
+            white-space: nowrap; /* No permitir saltos de línea */
+            text-overflow: ellipsis; /* Mostrar puntos suspensivos */
+            max-width: 130px; /* Ancho máximo para el título */
+            display: block; /* Asegurarse de que el título ocupe un bloque */
+        }
+
+        .highlight {
+            background-color: #FFB0C4; /* Rosado crema */
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+
+        .load-more {
+            display: block;
+            margin: 20px auto;
+            padding: 10px;
+            background-color: #FFB0C4;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            width: 100px;
+        }
+
+        .load-more:hover {
+            background-color: #FF69B4;
+        }
+
+        .no-results {
+            text-align: center;
+            color: white;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="search-container">
+        <input type="text" class="search-input" placeholder="Buscar películas o series...">
+        <button class="search-button">Buscar</button>
+    </div>
+
+    <div class="series-container" id="seriesContainer">
+        <!-• Series se cargarán aquí -->
+    </div>
+
+    <div class="no-results" id="noResultsMessage" style="display:none;">No se encontraron resultados</div>
+
+    <!-• Botón "Ver más" -->
+    <button class="load-more" id="loadMore">Ver más</button>
+
+    <script>
+        const seriesData = [
+            { title: "One Piecehdjfjfjdjdkdkdkdksksnamamamamamsmsmsmse", calificacion: "8.7", img: "https://media.themoviedb.org/t/p/w600_and_h900_bestv2/cMD9Ygz11zjJzAovURpO75Qg7rT.jpg", url: "https://www.example.com/one-piece" },
+            { title: "Naruto: Shippuden hoooooolaaaaaaaaa", calificacion: "8.5", img: "https://media.themoviedb.org/t/p/w600_and_h900_bestv2/71mASgFgSiPl9QUexVH8BubU0lD.jpg", url: "https://www.example.com/naruto" },
+            { title: "Demon Slayer", calificacion: "7.8", img: "https://media.themoviedb.org/t/p/w600_and_h900_bestv2/wq1UG5lPCKpOJgmgpKJszKvoMUe.jpg", url: "https://www.example.com/demon-slayer" },
+            { title: "Chainsaw Man", calificacion: "8.6", img: "https://media.themoviedb.org/t/p/w600_and_h900_bestv2/npdB6eFzizki0WaZ1OvKcJrWe97.jpg", url: "https://www.example.com/chainsaw-man" },
+            { title: "Spy x Family", calificacion: "8.6", img: "https://media.themoviedb.org/t/p/w600_and_h900_bestv2/gHZqglFWJTFwx6rnTq4vkPRnuxu.jpg", url: "https://www.example.com/spy-x-family" },
+            { title: "Blue Lock", calificacion: "8.2", img: "https://media.themoviedb.org/t/p/w600_and_h900_bestv2/fT9W86KFA9Khy2hIbkfClI8IYDH.jpg", url: "https://www.example.com/blue-lock" },
+            { title: "One Punch Man", calificacion: "8.4", img: "https://media.themoviedb.org/t/p/w600_and_h900_bestv2/jbYJuxfZMpYDalkiOnBcCv9TaL.jpg", url: "https://www.example.com/one-punch-man" },
+        ];
+
+        const seriesContainer = document.getElementById('seriesContainer');
+        const loadMoreButton = document.getElementById('loadMore');
+        const searchInput = document.querySelector('.search-input');
+        const noResultsMessage = document.getElementById('noResultsMessage');
+
+        let currentCount = 0;
+        const itemsPerLoad = 20;
+
+        function loadSeries(startIndex = 0, endIndex = itemsPerLoad) {
+            const end = Math.min(startIndex + endIndex, seriesData.length);
+            for (let i = startIndex; i < end; i++) {
+                const newSeriesItem = document.createElement('div');
+                newSeriesItem.classList.add('series-item');
+                newSeriesItem.innerHTML = `
+                    <a href="${seriesData[i].url}" target="_blank">
+                        <img src="${seriesData[i].img}" alt="${seriesData[i].title}">
+                        <span class="calificacion">${seriesData[i].calificacion}</span>
+                        <span class="series-title">${highlightMatch(seriesData[i].title, searchInput.value)}</span>
+                    </a>
+                `;
+                seriesContainer.appendChild(newSeriesItem);
+            }
+            currentCount += itemsPerLoad;
+
+            // Ocultar el botón si no hay más series para cargar
+            if (currentCount >= seriesData.length) {
+                loadMoreButton.style.display = 'none';
+            }
+        }
+
+        function highlightMatch(title, query) {
+            if (!query) return title; // Si no hay consulta, devuelve el título original
+            const regex = new RegExp(`(${query})`, 'gi'); // Ignorar mayúsculas
+            return title.replace(regex, '<span class="highlight">$1</span>');
+        }
+
+        function filterSeries() {
+            const query = normalizeString(searchInput.value);
+            const filteredData = seriesData.filter(series => 
+                normalizeString(series.title).includes(query)
+            );
+
+            seriesContainer.innerHTML = ''; // Limpiar el contenedor antes de mostrar resultados
+            noResultsMessage.style.display = 'none'; // Ocultar mensaje de no resultados
+
+            if (filteredData.length > 0) {
+                filteredData.forEach(series => {
+                    const newSeriesItem = document.createElement('div');
+                    newSeriesItem.classList.add('series-item');
+                    newSeriesItem.innerHTML = `
+                        <a href="${series.url}" target="_blank">
+                            <img src="${series.img}" alt="${series.title}">
+                            <span class="calificacion">${series.calificacion}</span>
+                            <span class="series-title">${highlightMatch(series.title, searchInput.value)}</span>
+                        </a>
+                    `;
+                    seriesContainer.appendChild(newSeriesItem);
+                });
+            } else {
+                noResultsMessage.style.display = 'block'; // Mostrar mensaje de no resultados
+            }
+        }
+
+        function normalizeString(str) {
+            return str
+                .toLowerCase() // Convertir a minúsculas
+                .normalize("NFD") // Normalizar caracteres
+                .replace(/[\u0300-\u036f]/g, "") // Eliminar tildes
+                .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"") // Eliminar signos de puntuación
+                .trim(); // Eliminar espacios al inicio y final
+        }
+
+        // Cargar las primeras 20 series al inicio
+        loadSeries();
+
+        // Añadir evento al botón "Ver más"
+        loadMoreButton.addEventListener('click', () => loadSeries(currentCount));
+
+        // Añadir evento de búsqueda
+        searchInput.addEventListener('input', debounce(filterSeries, 300));
+
+        // Debounce function
+        function debounce(func, delay) {
+            let timeout;
+            return function() {
+                clearTimeout(timeout);
+                timeout = setTimeout(() => func.apply(this, arguments), delay);
+            };
+        }
+    </script>
+</body>
+</html>

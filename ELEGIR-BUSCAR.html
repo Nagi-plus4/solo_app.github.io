@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Botones de Categoría</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100vw; /* Asegura que ocupe todo el ancho */
+            background-color: #000;
+            color: white;
+            margin: 0; /* Eliminar márgenes por defecto */
+            overflow: hidden; /* Evita el desplazamiento */
+            font-size: 16px; /* Tamaño de fuente base */
+        }
+
+        .container {
+            width: 400px; /* Ancho fijo */
+            text-align: center; /* Centrar texto */
+        }
+
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px; /* Espaciado aumentado entre botones */
+        }
+
+        .btn {
+            padding: 20px; /* Espacio interno para hacer botones más grandes */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px; /* Tamaño de fuente en los botones */
+            font-weight: bold;
+            transition: box-shadow 0.2s;
+            width: 100%; /* Hacer que los botones ocupen todo el ancho del contenedor */
+            min-height: 50px; /* Altura mínima para los botones */
+        }
+
+        .btn:hover {
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .infantil {
+            background-color: #4CAF50; /* Verde */
+            color: white;
+        }
+
+        .peliculas {
+            background-color: #F44336; /* Rojo */
+            color: white;
+        }
+
+        .animes {
+            background-color: #FFD1DC; /* Rosado crema */
+            color: black;
+        }
+
+        .alert {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.9);
+            color: black;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            text-align: center;
+        }
+
+        .alert.active {
+            display: block;
+        }
+
+        .spinner {
+            display: none;
+            margin: 10px auto;
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-top: 4px solid transparent; /* Color del spinner se define en JS */
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: black; /* Texto del botón cerrar en negro */
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .close-btn:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="button-container">
+            <button id="infantil" class="btn infantil">Infantil</button>
+            <button id="peliculas" class="btn peliculas">Películas</button>
+            <button id="animes" class="btn animes">Animes</button>
+        </div>
+
+        <div class="alert" id="alert">
+            <div class="spinner" id="spinner"></div>
+            <p id="alert-message"></p>
+            <button class="close-btn" id="close-alert">Cerrar</button>
+        </div>
+    </div>
+
+    <script>
+        let redirectTimeout; // Variable para almacenar el temporizador de redirección
+
+        function showAlert(message, buttonColor, redirectUrl) {
+            const alertBox = document.getElementById('alert');
+            const alertMessage = document.getElementById('alert-message');
+            const spinner = document.getElementById('spinner');
+            const closeButton = document.getElementById('close-alert');
+
+            alertMessage.textContent = message;
+            alertBox.classList.add('active');
+            spinner.style.display = 'block';
+            spinner.style.borderTopColor = buttonColor; // Cambia el color del spinner
+            closeButton.style.backgroundColor = buttonColor; // Cambia el fondo del botón cerrar
+
+            // Iniciar el temporizador de redirección
+            redirectTimeout = setTimeout(() => {
+                spinner.style.display = 'none';
+                alertBox.classList.remove('active');
+                window.location.href = redirectUrl; // Redirige a la URL correspondiente
+            }, 5000); // Spinner cargando durante 5 segundos
+        }
+
+        document.getElementById('infantil').addEventListener('click', function() {
+            showAlert('Botón Infantil presionado', '#4CAF50', 'pagina_infantil.html'); // Cambia a la URL deseada
+        });
+
+        document.getElementById('peliculas').addEventListener('click', function() {
+            showAlert('Botón Películas presionado', '#F44336', 'pagina_peliculas.html'); // Cambia a la URL deseada
+        });
+
+        document.getElementById('animes').addEventListener('click', function() {
+            showAlert('Botón Animes presionado', '#FFD1DC', 'pagina_animes.html'); // Cambia a la URL deseada
+        });
+
+        document.getElementById('close-alert').addEventListener('click', function() {
+            document.getElementById('alert').classList.remove('active');
+            clearTimeout(redirectTimeout); // Cancela el temporizador de redirección
+            document.getElementById('spinner').style.display = 'none'; // Oculta el spinner
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Películas y Series</title>
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+<style>
+body {
+  font-family: sans-serif;
+  margin: 0;
+  background-color: #111;
+  color: white;
+}
+
+.swiper {
+  width: 100%;
+  height: 300px;
+  position: relative;
+}
+
+.swiper-slide {
+  text-align: center;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.swiper-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.swiper-button-prev, .swiper-button-next {
+  color: #FFB0C4; /* Cambiado a rosa pastel */
+  background-color: transparent;
+}
+
+.series-text {
+  color: white;
+  font-size: 2em;
+  margin: 20px;
+  display: inline-block;
+  position: relative;
+  top: 5px;
+  left: -15px;
+}
+
+.ver-mas {
+  color: white;
+  font-size: 1em;
+  display: inline-block;
+  cursor: pointer;
+  text-align: right;
+  margin-left: auto;
+  text-decoration: none;
+}
+
+.ver-mas:hover {
+  color: #FFB0C4; /* Cambiado a rosa pastel */
+}
+
+.series-container {
+  margin: 0 20px 10px;
+  display: flex;
+  align-items: center;
+}
+
+.series-carousel {
+  display: flex;
+  overflow-x: auto;
+  gap: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  margin-top: -40px;
+}
+
+.series-carousel img {
+  width: 150px;
+  height: 220px;
+  margin: 5px;
+  object-fit: cover;
+  position: relative;
+}
+
+.calificacion {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: rgba(255, 176, 204, 0.7); /* Cambiado a rosa pastel */
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+.swiper-pagination-bullet {
+  background: #FFB0C4; /* Cambiado a rosa pastel */
+  border-radius: 0;
+  width: 10px;
+  height: 10px;
+}
+
+.swiper-pagination-bullet-active {
+  background: #FF69B4; /* Un rosa más intenso */
+}
+
+img {
+  object-fit: cover;
+}
+
+.series-carousel a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  text-decoration: none; /* Sin subrayado */
+}
+
+.series-title {
+  margin-top: 5px; /* Espacio entre la imagen y el texto */
+  color: white; /* Color del texto */
+  font-size: 1em; /* Tamaño del texto */
+  text-align: center; /* Centrar el texto */
+  overflow: hidden; /* Ocultar texto que no cabe */
+  white-space: nowrap; /* No permitir saltos de línea */
+  text-overflow: ellipsis; /* Mostrar puntos suspensivos */
+  max-width: 130px; /* Ancho máximo para el título */
+}
+
+.swiper-title {
+  text-align: center;
+  color: white;
+  font-size: 1.7em;
+  position: absolute;
+  top: 200px;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: fadeIn 1s ease-in-out;
+  font-weight: bold;
+  padding: 5px 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+  z-index: 10;
+}
+
+.calificacion-pelicula {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: rgba(255, 176, 204, 0.7); /* Cambiado a rosa pastel */
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+</style>
+</head>
+<body>
+  <div class="swiper mySwiper">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide">
+        <a href="#"><img src="https://c.tenor.com/XudSzy2LZooAAAAC/tenor.gif" alt="Imagen 1"><span class="calificacion-pelicula">9.5</span></a>
+        <div class="swiper-title">DRAGON BALL DAIMA T1</div>
+      </div>
+      <div class="swiper-slide">
+        <a href="#"><img src="https://steamuserimages-a.akamaihd.net/ugc/2342503777988065830/2AE7E6F9F00FFCA5DA0115DEA54955446047FB50/?imw=637&imh=358&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=true" alt="Imagen 2"><span class="calificacion-pelicula">8.8</span></a>
+        <div class="swiper-title">SOLO LEVELING</div>
+      </div>
+      <div class="swiper-slide">
+        <a href="#"><img src="https://giffiles.alphacoders.com/223/223323.gif" alt="Imagen 3"><span class="calificacion-pelicula">7.5</span></a>
+        <div class="swiper-title">SAKAMOTO DAYS</div>
+      </div>
+      <div class="swiper-slide">
+        <a href="#"><img src="https://i.giphy.com/3fBVaRM2c79TtXbyi6.webp" alt="Imagen 4"><span class="calificacion-pelicula">9.2</span></a>
+        <div class="swiper-title">ONE PIECE T1</div>
+      </div>
+      <div class="swiper-slide">
+        <a href="#"><img src="https://i.pinimg.com/originals/5a/57/f7/5a57f72f0bc9afecf18cb70f293bec6c.gif" alt="Imagen 4"><span class="calificacion-pelicula">9.2</span></a>
+        <div class="swiper-title">ONE PUCH MAN T1</div>
+      </div>
+    </div>
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-pagination"></div>
+  </div>
+
+  <div class="series-container">
+    <div class="series-text">RECOMEND NAGI PLUS</div>
+    <a href="#" class="ver-mas">Ver más</a>
+  </div>
+
+  <div class="series-carousel">
+    <a href="#">
+      <img src="https://media.themoviedb.org/t/p/w600_and_h900_bestv2/cMD9Ygz11zjJzAovURpO75Qg7rT.jpg" alt="Imagen 1">
+      <span class="calificacion">8.7</span>
+      <span class="series-title">One Piece Grandes Papad</span> <!-• Nombre de la serie debajo de la imagen -->
+    </a>
+    <a href="#">
+      <img src="https://media.themoviedb.org/t/p/w600_and_h900_bestv2/71mASgFgSiPl9QUexVH8BubU0lD.jpg" alt="Imagen 2">
+      <span class="calificacion">8.5</span>
+      <span class="series-title">Naruto: Shippuden </span> <!-• Nombre de la serie debajo de la imagen -->
+    </a>
+    <a href="https://nagi-plus4.github.io/flay_info.github.io/Demon-slayer-T1,T2,T3,T4.html">
+      <img src="https://media.themoviedb.org/t/p/w600_and_h900_bestv2/wq1UG5lPCKpOJgmgpKJszKvoMUe.jpg" alt="Imagen 3">
+      <span class="calificacion">7.8</span>
+      <span class="series-title">Demon Slayer:</span> <!-• Nombre de la serie debajo de la imagen -->
+    </a>
+    <a href="#">
+      <img src="https://media.themoviedb.org/t/p/w600_and_h900_bestv2/npdB6eFzizki0WaZ1OvKcJrWe97.jpg" alt="Imagen 4">
+      <span class="calificacion">8.6</span>
+      <span class="series-title">Chainsaw Man</span> <!-• Nombre de la serie debajo de la imagen -->
+    </a>
+    <a href="#">
+      <img src="https://media.themoviedb.org/t/p/w600_and_h900_bestv2/gHZqglFWJTFwx6rnTq4vkPRnuxu.jpg" alt="Imagen 5">
+      <span class="calificacion">8.6</span>
+      <span class="series-title">Spy x Family</span> <!-• Nombre de la serie debajo de la imagen -->
+    </a>
+    <a href="#">
+      <img src="https://media.themoviedb.org/t/p/w600_and_h900_bestv2/fT9W86KFA9Khy2hIbkfClI8IYDH.jpg" alt="Imagen 6">
+      <span class="calificacion">8.2</span>
+      <span class="series-title">Blue Lock</span> <!-• Nombre de la serie debajo de la imagen -->
+    </a>
+    <a href="#">
+      <img src="https://media.themoviedb.org/t/p/w600_and_h900_bestv2/jbYJuxfZMpYDalkiOnBcCv9TaL.jpg" alt="Imagen 7">
+      <span class="calificacion">8.4</span>
+      <span class="series-title">One Puch Man</span> <!-• Nombre de la serie debajo de la imagen -->
+    </a>
+  </div>
+  
+    <div class="series-container">
+    <div class="series-text">LOS MAS VISTOS 2025</div>
+    <a href="#" class="ver-mas">Ver más</a>
+  </div>
+
+  <div class="series-carousel">
+    <a href="#">
+      <img src="https://media.themoviedb.org/t/p/w600_and_h900_bestv2/cMD9Ygz11zjJzAovURpO75Qg7rT.jpg" alt="Imagen 1">
+      <span class="calificacion">8.7</span>
+      <span class="series-title">One Piece Grandes Papad</span> <!-• Nombre de la serie debajo de la imagen -->
+    </a>
+    <a href="#">
+      <img src="https://media.themoviedb.org/t/p/w600_and_h900_bestv2/71mASgFgSiPl9QUexVH8BubU0lD.jpg" alt="Imagen 2">
+      <span class="calificacion">8.5</span>
+      <span class="series-title">Naruto: Shippuden </span> <!-• Nombre de la serie debajo de la imagen -->
+    </a>
+    <a href="#">
+      <img src="https://media.themoviedb.org/t/p/w600_and_h900_bestv2/wq1UG5lPCKpOJgmgpKJszKvoMUe.jpg" alt="Imagen 3">
+      <span class="calificacion">7.8</span>
+      <span class="series-title">Demon Slayer:</span> <!-• Nombre de la serie debajo de la imagen -->
+    </a>
+    <a href="#">
+      <img src="https://media.themoviedb.org/t/p/w600_and_h900_bestv2/npdB6eFzizki0WaZ1OvKcJrWe97.jpg" alt="Imagen 4">
+      <span class="calificacion">8.6</span>
+      <span class="series-title">Chainsaw Man</span> <!-• Nombre de la serie debajo de la imagen -->
+    </a>
+    <a href="#">
+      <img src="https://media.themoviedb.org/t/p/w600_and_h900_bestv2/gHZqglFWJTFwx6rnTq4vkPRnuxu.jpg" alt="Imagen 5">
+      <span class="calificacion">8.6</span>
+      <span class="series-title">Spy x Family</span> <!-• Nombre de la serie debajo de la imagen -->
+    </a>
+    <a href="#">
+      <img src="https://media.themoviedb.org/t/p/w600_and_h900_bestv2/fT9W86KFA9Khy2hIbkfClI8IYDH.jpg" alt="Imagen 6">
+      <span class="calificacion">8.2</span>
+      <span class="series-title">Blue Lock</span> <!-• Nombre de la serie debajo de la imagen -->
+    </a>
+    <a href="#">
+      <img src="https://media.themoviedb.org/t/p/w600_and_h900_bestv2/jbYJuxfZMpYDalkiOnBcCv9TaL.jpg" alt="Imagen 7">
+      <span class="calificacion">8.4</span>
+      <span class="series-title">One Puch Man</span> <!-• Nombre de la serie debajo de la imagen -->
+    </a>
+  </div>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+<script>
+var swiper = new Swiper(".mySwiper", {
+  spaceBetween: 30,
+  centeredSlides: true,
+  autoplay: {
+    delay: 2500,
+    disableOnInteraction: false,
+  },
+  pagination: {
+    el: ".swiper-pagination",
+    clickable: true,
+  },
+  navigation: {
+    nextEl: ".swiper-button-next",
+    prevEl: ".swiper-button-prev",
+  },
+  speed: 1000,
+});
+</script>
+</body>
+</html>

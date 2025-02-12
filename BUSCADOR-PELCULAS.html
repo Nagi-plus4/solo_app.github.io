@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buscador de Series</title>
+    <title>Películas y Series</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
             font-family: sans-serif;
             margin: 0;
-            background-color: #111; /* Fondo oscuro */
+            background-color: #111;
             color: white;
         }
 
@@ -22,7 +23,7 @@
         .search-input {
             padding: 12px 20px;
             font-size: 1em;
-            border: 2px solid #FF4C4C; /* Rojo */
+            border: 2px solid #FF0000; /* Rojo */
             border-radius: 25px 0 0 25px;
             width: 300px;
             outline: none;
@@ -30,14 +31,14 @@
         }
 
         .search-input:focus {
-            border-color: #FF1C1C; /* Rojo más intenso */
-            box-shadow: 0 0 5px rgba(255, 28, 28, 0.5);
+            border-color: #FF0000; /* Rojo más intenso */
+            box-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
         }
 
         .search-button {
             padding: 12px 20px;
             font-size: 1em;
-            background-color: #FF4C4C; /* Rojo */
+            background-color: #FF0000; /* Rojo */
             color: white;
             border: none;
             border-radius: 0 25px 25px 0;
@@ -46,7 +47,7 @@
         }
 
         .search-button:hover {
-            background-color: #FF1C1C; /* Rojo más intenso */
+            background-color: #FF0000; /* Rojo más intenso */
             transform: translateY(-2px);
         }
 
@@ -86,7 +87,7 @@
             position: absolute;
             top: 10px;
             right: 10px;
-            background-color: rgba(255, 76, 76, 0.7); /* Rojo */
+            background-color: rgba(255, 0, 0, 0.7); /* Rojo */
             color: white;
             padding: 5px 10px;
             border-radius: 5px;
@@ -101,10 +102,11 @@
             white-space: nowrap; /* No permitir saltos de línea */
             text-overflow: ellipsis; /* Mostrar puntos suspensivos */
             max-width: 130px; /* Ancho máximo para el título */
+            display: block; /* Asegurarse de que el título ocupe un bloque */
         }
 
         .highlight {
-            background-color: #FF4C4C; /* Rojo */
+            background-color: #FF0000; /* Rojo */
             padding: 2px 4px;
             border-radius: 3px;
         }
@@ -113,7 +115,7 @@
             display: block;
             margin: 20px auto;
             padding: 10px;
-            background-color: #FF4C4C; /* Rojo */
+            background-color: #FF0000; /* Rojo */
             color: white;
             border: none;
             border-radius: 5px;
@@ -123,7 +125,7 @@
         }
 
         .load-more:hover {
-            background-color: #FF1C1C; /* Rojo más intenso */
+            background-color: #FF0000; /* Rojo más intenso */
         }
 
         .no-results {
@@ -150,13 +152,15 @@
 
     <script>
         const seriesData = [
-            { title: "One Piece", calificacion: "8.7", img: "https://media.themoviedb.org/t/p/w600_and_h900_bestv2/cMD9Ygz11zjJzAovURpO75Qg7rT.jpg", url: "https://www.example.com/one-piece" },
-            { title: "Naruto: Shippuden", calificacion: "8.5", img: "https://media.themoviedb.org/t/p/w600_and_h900_bestv2/71mASgFgSiPl9QUexVH8BubU0lD.jpg", url: "https://www.example.com/naruto" },
-            { title: "Demon Slayer", calificacion: "7.8", img: "https://media.themoviedb.org/t/p/w600_and_h900_bestv2/wq1UG5lPCKpOJgmgpKJszKvoMUe.jpg", url: "https://www.example.com/demon-slayer" },
-            { title: "Chainsaw Man", calificacion: "8.6", img: "https://media.themoviedb.org/t/p/w600_and_h900_bestv2/npdB6eFzizki0WaZ1OvKcJrWe97.jpg", url: "https://www.example.com/chainsaw-man" },
-            { title: "Spy x Family", calificacion: "8.6", img: "https://media.themoviedb.org/t/p/w600_and_h900_bestv2/gHZqglFWJTFwx6rnTq4vkPRnuxu.jpg", url: "https://www.example.com/spy-x-family" },
-            { title: "Blue Lock", calificacion: "8.2", img: "https://media.themoviedb.org/t/p/w600_and_h900_bestv2/fT9W86KFA9Khy2hIbkfClI8IYDH.jpg", url: "https://www.example.com/blue-lock" },
-            { title: "One Punch Man", calificacion: "8.4", img: "https://media.themoviedb.org/t/p/w600_and_h900_bestv2/jbYJuxfZMpYDalkiOnBcCv9TaL.jpg", url: "https://www.example.com/one-punch-man" },
+            { title: "El despertar de la bestia (2024)", calificacion: "6.2", img: "https://media.themoviedb.org/t/p/w300_and_h450_bestv2/jsfD5FoS85glIyGudwd1q7Gg97.jpg", url: "https://nagi-plus4.github.io/flay_info.github.io/One-piece-T1.html" },
+            { title: "Elevation (2024)", calificacion: "6.4", img: "https://media.themoviedb.org/t/p/w300_and_h450_bestv2/92cd9vR6ThBqT6Pe6m5daxX0rAk.jpg", url: "https://www.example.com/naruto" },
+            { title: "Star Trek: Section 31 (2025)", calificacion: "4.7", img: "https://media.themoviedb.org/t/p/w300_and_h450_bestv2/bx9btF0Jo4rRF68xny7VPqHNt3z.jpg", url: "https://nagi-plus4.github.io/flay_info.github.io/Demon-slayer-T1,T2,T3,T4.html" },
+            { title: "Algo embarazada (2025)", calificacion: "5.6", img: "https://media.themoviedb.org/t/p/w300_and_h450_bestv2/lpMXvcdOnEg4rvsIjWEImhHI1aH.jpg", url: "https://www.example.com/chainsaw-man" },
+            { title: "La sustancia (2024)", calificacion: "7.1", img: "https://media.themoviedb.org/t/p/w300_and_h450_bestv2/w1PiIqM89r4AM7CiMEP4VLCEFUn.jpg", url: "https://www.example.com/spy-x-family" },
+            { title: "Nosferatu (2024)", calificacion: "6.7", img: "https://media.themoviedb.org/t/p/w300_and_h450_bestv2/jivUhECegXI3OYtPVflWoIDtENt.jpg", url: "https://www.example.com/blue-lock" },
+            { title: "Amaran (2024)", calificacion: "7.1", img: "https://media.themoviedb.org/t/p/w300_and_h450_bestv2/jVP3rAtgBMFH6RrSa6r4aP4wv1T.jpg", url: "https://www.example.com/one-punch-man" },
+            { title: "Capitán América: Brave New World (2025)", calificacion: "6.4", img: "https://media.themoviedb.org/t/p/w300_and_h450_bestv2/xVwP4GCbEfO66JSSyonnAhU3Fad.jpg", url: "https://www.example.com/one-punch-man" },
+            { title: "Devara: Parte 1 (2024)", calificacion: "7.3", img: "https://media.themoviedb.org/t/p/w300_and_h450_bestv2/A9ENz6d4lC3UYOX8Z1gJwDEo1sM.jpg", url: "https://www.example.com/one-punch-man" },
         ];
 
         const seriesContainer = document.getElementById('seriesContainer');

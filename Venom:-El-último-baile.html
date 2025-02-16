@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Venom: El último baile Nagi Plus</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            color: white;
+            scroll-behavior: smooth;
+            background: url('https://media.themoviedb.org/t/p/w780/vZG7PrX9HmdgL5qfZRjhJsFYEIA.jpg') no-repeat center center fixed; /* Imagen de fondo */
+            background-size: cover; /* Cubre todo el fondo */
+        }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8); /* Degradado oscuro más opaco */
+            z-index: 1; /* Asegúrate de que esté detrás del contenido */
+        }
+        .header {
+            height: 300px;
+            display: flex; /* Para organizar el póster y el video */
+            align-items: center; /* Alinea verticalmente el contenido */
+            position: relative; /* Para que el contenido esté sobre el overlay */
+            z-index: 2; /* Asegúrate de que esté por encima del overlay */
+        }
+        .poster-container {
+            width: 100px; /* Ajusta el ancho del póster según sea necesario */
+            margin-right: 20px; /* Espacio entre el póster y el video */
+        }
+        .poster-container img {
+            width: 100%;
+            height: auto;
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: none; /* Oculta el video inicialmente */
+        }
+        .content {
+            padding: 20px;
+            display: flex; /* Para organizar el póster y la información */
+            position: relative; /* Para que el contenido esté sobre el overlay */
+            z-index: 2; /* Asegúrate de que esté por encima del overlay */
+        }
+        .details-container {
+            flex: 1; /* La información ocupa el espacio restante */
+        }
+        .details h1 {
+            font-size: 24px;
+            margin: 10px 0;
+        }
+        .details p {
+            margin: 5px 0;
+        }
+        .buttons {
+            margin: 10px 0;
+            display: flex;
+            gap: 10px;
+        }
+        .btn-lang, .btn-download {
+            background-color: #333;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+        .btn-download {
+            background-color: #FFD700; /* Dorado */
+            color: black; /* Texto negro */
+            margin-left: auto;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-download::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.3);
+            transition: left 0.5s;
+        }
+        .btn-download:hover::before {
+            left: 100%;
+        }
+        .server-list {
+            display: flex; /* Flex para controlar la disposición */
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            justify-content: flex-start; /* Alinea a la izquierda */
+        }
+        .server-item {
+            background-color: #555; /* Color plomo inicial */
+            padding: 12px 24px;
+            cursor: pointer;
+            text-align: center;
+            border-radius: 5px;
+            color: white;
+            font-weight: bold;
+            transition: background-color 0.3s, color 0.3s, transform 0.3s;
+        }
+        .server-item:hover {
+            transform: scale(1.05); /* Animación al pasar el cursor */
+        }
+        .server-item.selected {
+            color: black;
+        }
+        .server-item.pro.selected {
+            background-color: #FFD700; /* Dorado brillante */
+        }
+        .server-item.medio.selected {
+            background-color: #FFA500; /* Naranja medio */
+        }
+        .server-item.basico.selected {
+            background-color: #555; /* Color básico */
+        }
+        .details-top {
+            display: flex; /* Usa Flexbox para la sección superior */
+            justify-content: space-between; /* Distribuye elementos */
+            align-items: center; /* Alinea verticalmente */
+            margin-bottom: 10px; /* Espacio abajo */
+        }
+        .rating {
+            font-size: 20px;
+            font-weight: bold;
+            color: #FFD700; /* Color dorado */
+        }
+        .btn-lang {
+            background: linear-gradient(to right, #00FF00, #FF0000, #FF69B4);
+            border-radius: 10px;
+            color: #000;
+            text-shadow: 1px 1px 2px #000;
+            transition: background-position 0.5s ease-in-out;
+        }
+        .btn-lang:hover {
+            background-position: 100% 0;
+        }
+        .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 36px;
+            color: #333;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            z-index: 3; /* Por encima de todo */
+            cursor: pointer;
+            transition: transform 0.3s;
+            animation: wave 1.5s infinite; /* Animación de olas */
+        }
+        .play-button:hover {
+            transform: scale(1.1); /* Aumenta el tamaño al pasar el cursor */
+        }
+        .play-button:active {
+            transform: scale(0.9); /* Efecto de pulsar */
+        }
+        @keyframes wave {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(1);
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.05);
+            }
+        }
+        .share-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: white; /* Fondo blanco */
+            border: none;
+            border-radius: 50%;
+            width: 70px;
+            height: 70px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            color: black; /* Ícono negro */
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+            transition: transform 0.3s;
+            animation: pulse 1.5s infinite; /* Animación de pulsar */
+        }
+        .share-button:hover {
+            transform: scale(1.1); /* Aumenta el tamaño al pasar el cursor */
+        }
+        .share-button:active {
+            transform: scale(0.9); /* Efecto de pulsar */
+        }
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+        .connection-message {
+            position: fixed;
+            bottom: 100px; /* Posiciona el mensaje justo encima del botón de compartir */
+            right: 20px;
+            background: rgba(0, 0, 0, 0.7); /* Fondo oscuro semi-transparente */
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            opacity: 0;
+            transition: opacity 0.5s;
+            z-index: 4; /* Por encima de todo */
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay"></div> <!-• Capa de degradado más opaco -->
+    <div class="header" id="videoSection">
+        <iframe id="videoPlayer" src="https://nagi-plus4.github.io/embed.github.io/REPRODUCTOR-OFICIAL-NAGI-PLUS.html?link=https://1a-1791.com/video/fwe2/30/s8/2/9/x/b/u/9xbuw.gaa.mp4&titulo=Venom:%20El%20último%20baile&tiempo=40"></iframe>
+        <button class="play-button" id="playButton">
+            <i class="fas fa-play"></i>
+        </button>
+    </div>
+    <div class="content" style="display: flex;">
+        <div class="poster-container">
+            <img src="https://media.themoviedb.org/t/p/w500/toZiAd0n0NKhiuHTiGk7kBMmhtG.jpg" alt="Algo embarazada Poster">
+        </div>
+        <div class="details-container">
+            <div class="details">
+                <div class="details-top">
+                    <h1>Venom: El último baile</h1>
+                    <div class="rating">6.8</div>
+                </div>
+                <p><h4>Publicado: 24/10/2024 (BO)
+Acción, Ciencia ficción, Aventura
+.</h5></p>
+                <p>Sinopsis: Eddie y Venom están a la fuga. Perseguidos por sus sendos mundos y cada vez más cercados, el dúo se ve abocado a tomar una decisión devastadora que hará que caiga el telón sobre el último baile de Venom y Eddie.</p>
+                <p>Duración: 1h 49m</p>
+                <div class="buttons">
+                    <button class="btn-lang" onclick="toggleFullscreen()">Pantalla Completa</button>
+                    <button class="btn-download">Descargar</button>
+                </div>
+                <div class="servers">
+                    <div class="servers-container">
+                        <h3>Servidores</h3>
+                    </div>
+                    <div class="server-list">
+                        <div class="server-item pro" data-server="1">Servidor 1 PRO</div>
+                        <div class="server-item medio" data-server="2">Servidor 2 Medio</div>
+                        <div class="server-item basico" data-server="3">Servidor 3 Básico</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button class="share-button" id="shareButton">
+        <i class="fas fa-tv"></i> <!-• Ícono de TV -->
+    </button>
+    <div class="connection-message" id="connectionMessage">Conéctate a una TV</div> <!-• Mensaje para conectarse a TV -->
+    <script>
+        const playButton = document.getElementById('playButton');
+        const videoPlayer = document.getElementById('videoPlayer');
+        const shareButton = document.getElementById('shareButton');
+        const connectionMessage = document.getElementById('connectionMessage');
+
+        // Mostrar el video al hacer clic en el botón de play
+        playButton.addEventListener('click', () => {
+            videoPlayer.style.display = 'block'; // Muestra el iframe
+            videoPlayer.src = videoPlayer.src; // Reinicia el video
+            playButton.style.display = 'none'; // Oculta el botón de play
+        });
+
+        // Función para compartir pantalla
+        shareButton.addEventListener('click', async () => {
+            try {
+                const mediaStream = await navigator.mediaDevices.getDisplayMedia({
+                    video: true,
+                    audio: true,
+                });
+                console.log(mediaStream);
+                alert("Buscando dispositivos para compartir pantalla..."); // Alerta al buscar dispositivos
+            } catch (err) {
+                console.error("Error: " + err);
+            }
+        });
+
+        // Ciclo de aparición y desaparición del mensaje
+        function toggleConnectionMessage() {
+            connectionMessage.style.opacity = 1; // Muestra el mensaje
+            setTimeout(() => {
+                connectionMessage.style.opacity = 0; // Oculta el mensaje
+            }, 10000); // Mensaje visible por 10 segundos
+        }
+
+        setInterval(() => {
+            toggleConnectionMessage();
+            setTimeout(() => {
+                connectionMessage.style.opacity = 0; // Oculta el mensaje después de 10 segundos
+            }, 5000); // Mensaje aparece cada 5 segundos
+        }, 15000); // Ciclo completo de aparición y desaparición
+
+        // URLs de visualización de los servidores
+        const urlsVisualización = [
+            'https://nagi-plus4.github.io/embed.github.io/REPRODUCTOR-OFICIAL-NAGI-PLUS.html?link=https://1a-1791.com/video/fwe2/30/s8/2/9/x/b/u/9xbuw.gaa.mp4&titulo=Venom:%20El%20último%20baile&tiempo=40', // Servidor 1
+            'NO DISOPONIBLE', // Servidor 2
+            'NO DISOPONIBLE' // Servidor 3
+        ];
+
+        // URLs de descarga de los servidores
+        const urlsDescarga = [
+            'https://ryderjet.com/download/gl1ybcv3zrvj', // Servidor 1
+            'https://ryderjet.com/download/gl1ybcv3zrvj', // Servidor 2
+            'https://ryderjet.com/download/gl1ybcv3zrvj' // Servidor 3
+        ];
+
+        document.querySelectorAll('.server-item').forEach((item, index) => {
+            item.addEventListener('click', () => {
+                videoPlayer.src = urlsVisualización[index];
+                // Cambia el botón de descarga
+                downloadButton.onclick = () => {
+                    window.open(urlsDescarga[index], '_blank');
+                };
+                // Resaltar el servidor seleccionado
+                document.querySelectorAll('.server-item').forEach(el => {
+                    el.classList.remove('selected');
+                    el.style.backgroundColor = '#555'; // Resetea el color de fondo a plomo
+                });
+                item.classList.add('selected');
+                item.style.backgroundColor = item.classList.contains('pro') ? '#FFD700' : item.classList.contains('medio') ? '#FFA500' : '#555';
+            });
+        });
+
+        function toggleFullscreen() {
+            if (document.fullscreenElement) {
+                document.exitFullscreen();
+            } else {
+                videoSection.requestFullscreen();
+            }
+        }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+</body>
+</html>
